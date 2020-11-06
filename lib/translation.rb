@@ -5,12 +5,8 @@ class Translation
     @destination = file_to_write
   end
 
-  def loo(file)
+  def is_english?(file)
     line = file.first_line
-    if line.gsub(/0./, '') == ""
-      "braille"
-    else
-      "english"
-    end
+    !(line.gsub(/0./, '') == "")
   end
 end

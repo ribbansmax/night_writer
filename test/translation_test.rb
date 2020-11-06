@@ -22,6 +22,6 @@ class TranslationTest < Minitest::Test
     line = "abcdefghij"
     file.stubs(:first_line).returns(line)
 
-    assert_equal "english", translation.loo(file)
+    assert translation.is_english?(file)
   end
 end
