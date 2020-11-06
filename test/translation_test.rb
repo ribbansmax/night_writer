@@ -23,5 +23,10 @@ class TranslationTest < Minitest::Test
     file.stubs(:first_line).returns(line)
 
     assert translation.is_english?(file)
+
+    line = "000..0.0...0..0"
+    file.stubs(:first_line).returns(line)
+
+    assert_equal false, translation.is_english?(file)
   end
 end
