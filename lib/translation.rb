@@ -4,4 +4,13 @@ class Translation
     @origin = file_to_read
     @destination = file_to_write
   end
+
+  def loo(file)
+    line = file.first_line
+    if line.gsub(/0./, '') == ""
+      "braille"
+    else
+      "english"
+    end
+  end
 end
