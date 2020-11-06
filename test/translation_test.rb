@@ -13,7 +13,7 @@ class TranslationTest < Minitest::Test
     assert_equal file_to_make, translation.destination
   end
 
-  def test_it_can_detect_loo
+  def test_it_can_detect_english
     file_to_read = "messages.txt"
     file_to_make = "braille.txt"
     translation = Translation.new(file_to_read, file_to_make)
