@@ -7,6 +7,6 @@ class Translation
 
   def is_english?(file)
     line = file.first_line
-    !(line.gsub(/0/, '').gsub(/[.]/, '') == "")
+    line.gsub(/[0.]/, '') != ""
   end
 end
