@@ -46,4 +46,12 @@ class Translation
     end
     braille
   end
+
+  def translate
+    if is_english?
+      Language_swap.swap(split_english)
+    else
+      Language_swap.swap(split_braille)
+    end
+  end
 end
