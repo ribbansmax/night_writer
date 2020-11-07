@@ -56,4 +56,17 @@ class Translation
       language.translation
     end
   end
+
+  def combine_english(characters)
+    characters.join
+  end
+
+  def combine_braille(characters)
+    characters = characters.map do |character|
+      [character[0..1], character[2..3], character[4..5]]
+    end.transpose
+    characters.map do |character|
+      character.join
+    end
+  end
 end
