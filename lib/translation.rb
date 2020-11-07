@@ -9,4 +9,8 @@ class Translation
     line = reader.first_line
     line.gsub(/[0.]/, '') != ""
   end
+
+  def characters
+    reader.characters
+  end
 end
