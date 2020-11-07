@@ -5,8 +5,9 @@ require './lib/writer'
 
 class WriterTest < Minitest::Test
   def test_it_exists_and_has_attributes
+    text = mock()
     destination = "dummy_writer.txt"
-    writer = Writer.new(destination)
+    writer = Writer.new(destination, text)
 
     expected = "./data/dummy_writer.txt"
 
