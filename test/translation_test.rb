@@ -76,11 +76,21 @@ class TranslationTest < Minitest::Test
   def test_it_can_combine_english
     reader = mock()
     Reader.expects(:new).returns(reader)
-    reader.expects(:lines).returns(["0..0", "...0", "0.0."])
     translation = Translation.new("", "")
 
     expected = "hi"
 
     assert_equal expected, translation.combine_english(["h", "i"])
+  end
+
+  def test_it_can_combine_braille
+    reader = mock()
+    Reader.expects(:new).returns(reader)
+    translation = Translation.new("", "")
+
+    characters = ["00..00", "00..00"]
+    expected = ["0000", "....", "0000"]
+
+    assert_equal expected, translation.combine_braille(characters)
   end
 end
