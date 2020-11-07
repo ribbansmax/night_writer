@@ -1,8 +1,8 @@
 class Translation
-  attr_reader :origin, :destination
-  def initialize(file_to_read, file_to_write)
-    @origin = file_to_read
-    @destination = file_to_write
+  attr_reader :destination, :reader
+  def initialize(origin, destination)
+    @destination = destination
+    @reader = Reader.new(origin)
   end
 
   def is_english?(file)
