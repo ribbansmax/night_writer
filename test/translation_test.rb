@@ -58,4 +58,17 @@ class TranslationTest < Minitest::Test
 
     assert_equal expected, translation.split_braille
   end
+
+  def test_it_can_translate
+    reader = mock()
+    Reader.expects(:new).returns(reader)
+    Translation.expects(:is_english?).returns(true)
+    Translation.stubs(:split_english).returns(["h", "i"])
+    translation = Translation.new("", "")
+
+    expected = ["0.00..", ".00..."]
+
+    assert_equal expected, translation.translate
+
+  end
 end
