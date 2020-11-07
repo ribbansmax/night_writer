@@ -49,9 +49,11 @@ class Translation
 
   def translate
     if is_english?
-      Language_swap.swap(split_english)
+      language = LanguageSwap.new(split_english, true)
+      language.translation
     else
-      Language_swap.swap(split_braille)
+      language = LanguageSwap.new(split_braille, false)
+      language.translation
     end
   end
 end
