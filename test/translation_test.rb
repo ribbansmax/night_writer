@@ -47,4 +47,15 @@ class TranslationTest < Minitest::Test
 
     assert_equal expected, translation.split_english
   end
+
+  def test_it_can_split_braille_by_character
+    reader = mock()
+    Reader.expects(:new).returns(reader)
+    reader.expects(:lines).returns(["0..0", "...0", "0.0."])
+    translation = Translation.new("", "")
+
+    expected = [["0...0."],[".0.00."]]
+
+    assert_equal expected, translation.split_braille
+  end
 end
