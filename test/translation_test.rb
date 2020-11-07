@@ -72,4 +72,15 @@ class TranslationTest < Minitest::Test
 
     assert_equal expected, translation2.translate
   end
+
+  def test_it_can_combine_english
+    reader = mock()
+    Reader.expects(:new).returns(reader)
+    reader.expects(:lines).returns(["0..0", "...0", "0.0."])
+    translation = Translation.new("", "")
+
+    expected = "hi"
+
+    assert_equal expected, translation.combine_english(["h", "i"])
+  end
 end
