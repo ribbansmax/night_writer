@@ -8,8 +8,8 @@ class ReaderTest < Minitest::Test
     origin = "dummy.txt"
     reader = Reader.new(origin)
 
-    expected = "hello world"
+    expected = "./data/dummy.txt"
 
-    assert_equal expected, reader.first_line
+    assert_equal expected, reader.path
   end
 end
