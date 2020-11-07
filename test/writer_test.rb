@@ -3,10 +3,10 @@ require 'minitest/pride'
 require 'mocha/minitest'
 require './lib/writer'
 
-class ReaderTest < Minitest::Test
+class WriterTest < Minitest::Test
   def test_it_exists_and_has_attributes
     destination = "dummy_writer.txt"
-    reader = Reader.new(destination)
+    writer = Writer.new(destination)
 
     expected = "./data/dummy_writer.txt"
 
