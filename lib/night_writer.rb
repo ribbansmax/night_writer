@@ -1,5 +1,5 @@
-require './lib/translator'
+require './lib/translation'
 
-translation = Translator.new(ARGV[0], ARGV[1])
+translation = Translation.new(ARGV[0], ARGV[1])
 
 puts "Created '#{ARGV[1]}' containing #{translation.characters} characters"
