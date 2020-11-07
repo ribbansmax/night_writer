@@ -54,7 +54,7 @@ class TranslationTest < Minitest::Test
     reader.expects(:lines).returns(["0..0", "...0", "0.0."])
     translation = Translation.new("", "")
 
-    expected = [["0...0."],[".0.00."]]
+    expected = ["0...0.",".0.00."]
 
     assert_equal expected, translation.split_braille
   end
