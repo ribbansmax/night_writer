@@ -31,7 +31,7 @@ class TranslationTest < Minitest::Test
   def test_it_can_return_characters
     reader = mock()
     Reader.expects(:new).returns(reader)
-    reader.expects(:chracters).returns(6)
+    reader.expects(:characters).returns(6)
 
     translation = Translation.new("", "")
 
