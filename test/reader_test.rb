@@ -11,5 +11,14 @@ class ReaderTest < Minitest::Test
     expected = "./data/dummy.txt"
 
     assert_equal expected, reader.path
+    assert_equal "hello world", reader.first_line
+    assert_equal "this is world", reader.lines[1]
+  end
+
+  def test_it_can_tell_characters
+    origin = "dummy.txt"
+    reader = Reader.new(origin)
+
+    assert_equal 24, reader.characters
   end
 end
