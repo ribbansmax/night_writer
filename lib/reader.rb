@@ -6,6 +6,7 @@ class Reader
     @first_line = lines[0]
   end
 
+  # this still needs a test (stubbit)
   def line_maker
     @lines = File.readlines(path, chomp: true)
   end
