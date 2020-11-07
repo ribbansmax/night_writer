@@ -19,15 +19,10 @@ class TranslationTest < Minitest::Test
     file_to_make = "braille.txt"
     translation = Translation.new(file_to_read, file_to_make)
 
-    file = mock()
-    line = "abcdefghij"
-    file.stubs(:first_line).returns(line)
+    assert translation.is_english?
 
-    assert translation.is_english?(file)
+    translation2 = Translation.new("braille_dummy.txt", file_to_make)
 
-    line = "000..0.0...0..0"
-    file.stubs(:first_line).returns(line)
-
-    assert_equal false, translation.is_english?(file)
+    assert_equal false, translation2.is_english?
   end
 end

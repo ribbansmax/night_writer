@@ -5,8 +5,8 @@ class Translation
     @reader = Reader.new(origin)
   end
 
-  def is_english?(file)
-    line = file.first_line
+  def is_english?
+    line = reader.first_line
     line.gsub(/[0.]/, '') != ""
   end
 end
