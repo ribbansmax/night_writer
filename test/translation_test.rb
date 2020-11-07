@@ -27,4 +27,14 @@ class TranslationTest < Minitest::Test
 
     assert translation.is_english?
   end
+
+  def test_it_can_return_characters
+    reader = mock()
+    Reader.expects(:new).returns(reader)
+    reader.expects(:chracters).returns(6)
+
+    translation = Translation.new("", "")
+
+    assert_equal 6, translation.characters
+  end
 end
