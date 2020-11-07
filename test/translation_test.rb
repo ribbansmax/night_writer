@@ -3,6 +3,7 @@ require 'minitest/pride'
 require 'mocha/minitest'
 require './lib/translation'
 require './lib/reader'
+require './lib/language_swap'
 
 class TranslationTest < Minitest::Test
   def test_it_exists_and_has_attributes
@@ -60,15 +61,15 @@ class TranslationTest < Minitest::Test
   end
 
   def test_it_can_translate
-    reader = mock()
-    Reader.expects(:new).returns(reader)
-    Translation.expects(:is_english?).returns(true)
-    Translation.stubs(:split_english).returns(["h", "i"])
-    translation = Translation.new("", "")
+    translation = Translation.new("dummy.txt", "")
+    translation2 = Translation.new("braille_dummy.txt", "")
 
-    expected = ["0.00..", ".00..."]
+    expected = ["0.00..", "0..0..", "0.0.0.", "0.0.0.", "0..00.", "......", ".000.0", "0..00.", "0.000.", "0.0.0.", "00.0..", ".0000.", "0.00..", ".00...", ".00.0.", "......", ".00...", ".00.0.", "......", ".000.0", "0..00.", "0.000.", "0.0.0.", "00.0.."]
 
     assert_equal expected, translation.translate
 
+    expected = ["d","b"]
+
+    assert_equal expected, translation2.translate
   end
 end
