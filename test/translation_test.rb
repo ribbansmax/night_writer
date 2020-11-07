@@ -15,14 +15,16 @@ class TranslationTest < Minitest::Test
   end
 
   def test_it_can_detect_english
-    file_to_read = "dummy.txt"
-    file_to_make = "braille.txt"
-    translation = Translation.new(file_to_read, file_to_make)
+    reader = mock()
+    Reader.expects(:new).returns(reader)
+    reader.expects(:first_line).returns("0.00.")
+
+    translation = Translation.new("", "")
+
+    assert_equal false, translation.is_english?
+
+    reader.expects(:first_line).returns("english")
 
     assert translation.is_english?
-
-    translation2 = Translation.new("braille_dummy.txt", file_to_make)
-
-    assert_equal false, translation2.is_english?
   end
 end
