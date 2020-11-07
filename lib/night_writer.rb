@@ -1,4 +1,5 @@
 require './lib/translation'
+require './lib/reader'
 
 translation = Translation.new(ARGV[0], ARGV[1])
 
