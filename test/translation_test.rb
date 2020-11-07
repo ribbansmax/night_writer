@@ -37,4 +37,15 @@ class TranslationTest < Minitest::Test
 
     assert_equal 6, translation.characters
   end
+
+  def test_it_can_split_english_by_character
+    reader = mock()
+    Reader.expects(:new).returns(reader)
+    reader.expects(:first_line).returns("hello")
+    reader.expects(:lines).returns(["hello world", "this is world"])
+    translation = Translation.new("", "")
+    expected = ["h", "e", "l", "l", "o", "t", "h", "i", "s", " ", "i", "s", " ", "w", "o", "r", "d", "d"]
+
+    assert_equal expected, translation.split_english
+  end
 end
