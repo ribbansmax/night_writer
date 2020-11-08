@@ -104,4 +104,11 @@ class TranslationTest < Minitest::Test
 
     assert_equal expected, translation.stage_braille(characters)
   end
+
+  def test_it_can_do_the_whole_shebang
+    translation = Translation.new("dummy.txt", "dummy_writer_test.txt")
+
+    translation.whole_shebang
+    assert "./data/dummy_writer_test.txt".exists?
+  end
 end
