@@ -4,6 +4,7 @@ require 'mocha/minitest'
 require './lib/translation'
 require './lib/reader'
 require './lib/language_swap'
+require './lib/writer'
 
 class TranslationTest < Minitest::Test
   def test_it_exists_and_has_attributes
@@ -18,13 +19,13 @@ class TranslationTest < Minitest::Test
   def test_it_can_detect_english
     reader = mock()
     Reader.expects(:new).returns(reader)
-    reader.expects(:first_line).returns("0.00.")
+    reader.stubs(:first_line).returns("0.00.")
 
     translation = Translation.new("", "")
 
     assert_equal false, translation.is_english?
 
-    reader.expects(:first_line).returns("english")
+    reader.stubs(:first_line).returns("english")
 
     assert translation.is_english?
   end
@@ -32,6 +33,7 @@ class TranslationTest < Minitest::Test
   def test_it_can_return_characters
     reader = mock()
     Reader.expects(:new).returns(reader)
+    reader.stubs(:first_line).returns("true")
     reader.expects(:characters).returns(6)
 
     translation = Translation.new("", "")
@@ -42,6 +44,7 @@ class TranslationTest < Minitest::Test
   def test_it_can_split_english_by_character
     reader = mock()
     Reader.expects(:new).returns(reader)
+    reader.expects(:first_line).returns("hello world")
     reader.expects(:lines).returns(["hello world", "this is world"])
     translation = Translation.new("", "")
     expected = ["h", "e", "l", "l", "o", " ", "w", "o", "r", "l", "d", "t", "h", "i", "s", " ", "i", "s", " ", "w", "o", "r", "l", "d"]
@@ -52,6 +55,7 @@ class TranslationTest < Minitest::Test
   def test_it_can_split_braille_by_character
     reader = mock()
     Reader.expects(:new).returns(reader)
+    reader.expects(:first_line).returns("0..0")
     reader.expects(:lines).returns(["0..0", "...0", "0.0."])
     translation = Translation.new("", "")
 
@@ -76,6 +80,7 @@ class TranslationTest < Minitest::Test
   def test_it_can_combine_english
     reader = mock()
     Reader.expects(:new).returns(reader)
+    reader.stubs(:first_line).returns("true")
     translation = Translation.new("", "")
 
     expected = "hi"
@@ -86,6 +91,7 @@ class TranslationTest < Minitest::Test
   def test_it_can_combine_braille
     reader = mock()
     Reader.expects(:new).returns(reader)
+    reader.stubs(:first_line).returns("true")
     translation = Translation.new("", "")
 
     characters = ["00..00", "00..00"]
@@ -97,6 +103,7 @@ class TranslationTest < Minitest::Test
   def test_it_can_stage_braille
     reader = mock()
     Reader.expects(:new).returns(reader)
+    reader.stubs(:first_line).returns("true")
     translation = Translation.new("", "")
 
     characters = ["0000000000000000000000000000000000000000000000000000000000000000000000000000000000", "0000000000000000000000000000000000000000000000000000000000000000000000000000000000", "0000000000000000000000000000000000000000000000000000000000000000000000000000000000"]
@@ -109,6 +116,6 @@ class TranslationTest < Minitest::Test
     translation = Translation.new("dummy.txt", "dummy_writer_test.txt")
 
     translation.whole_shebang
-    assert "./data/dummy_writer_test.txt".exists?
+    assert File.exists?("./data/dummy_writer_test.txt")
   end
 end
