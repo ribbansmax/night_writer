@@ -5,13 +5,15 @@ require './lib/writer'
 
 class WriterTest < Minitest::Test
   def test_it_exists_and_has_attributes
-    text = mock()
+    text = ["hello"]
     destination = "dummy_writer.txt"
+    File.stubs(:open).returns(true)
     writer = Writer.new(destination, text)
 
     expected = "./data/dummy_writer.txt"
 
     assert_equal expected, writer.path
+    assert_equal ["hello"], writer.text
   end
 
   def test_it_can_write_to_file
