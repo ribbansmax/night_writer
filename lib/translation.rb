@@ -1,9 +1,10 @@
 class Translation
-  attr_reader :destination, :reader, :english
+  attr_reader :destination, :reader, :english, :characters
   def initialize(origin, destination)
     @destination = destination
     @reader = Reader.new(origin)
     @english = is_english?
+    make_characters
   end
 
   def whole_shebang
@@ -12,6 +13,7 @@ class Translation
       final_translation = stage_braille(final_translation)
     else
       final_translation = stage_english(final_translation)
+      @characters = final_translation[0].length
     end
     Writer.new(destination, final_translation)
   end
@@ -21,8 +23,10 @@ class Translation
     line.gsub(/[0.]/, '') != ""
   end
 
-  def characters
-    reader.characters
+  def make_characters
+    if english
+      @characters = reader.characters
+    end
   end
 
   def split_english
@@ -77,11 +81,12 @@ class Translation
     characters = characters.transpose
     characters.each_slice(3) do |three_lines|
       until three_lines[0].empty? do
-        staged_braille << three_lines[0].slice!(0..79)
-        staged_braille << three_lines[1].slice!(0..79)
-        staged_braille << three_lines[2].slice!(0..79)
+        staged_braille << three_lines[0].slice!(0..39)
+        staged_braille << three_lines[1].slice!(0..39)
+        staged_braille << three_lines[2].slice!(0..39)
       end
     end
+    require'pry';binding.pry
     staged_braille
   end
 
