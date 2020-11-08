@@ -69,4 +69,16 @@ class Translation
       character.join
     end
   end
+
+  def stage_braille(characters)
+    staged_braille = []
+    characters.each_slice(3) do |three_lines|
+      until three_lines[0].empty? do
+        staged_braille << three_lines[0].slice!(0..79)
+        staged_braille << three_lines[1].slice!(0..79)
+        staged_braille << three_lines[2].slice!(0..79)
+      end
+    end
+    staged_braille
+  end
 end
