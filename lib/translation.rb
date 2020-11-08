@@ -1,8 +1,19 @@
 class Translation
-  attr_reader :destination, :reader
+  attr_reader :destination, :reader, :english
   def initialize(origin, destination)
     @destination = destination
     @reader = Reader.new(origin)
+    @english = is_english?
+  end
+
+  def whole_shebang
+    final_translation = translate
+    if english
+      final_translation = stage_braille(final_translation)
+    else
+      final_translation = stage_english(final_translation)
+    end
+    Writer.new(destination, final_translation)
   end
 
   def is_english?
@@ -25,36 +36,24 @@ class Translation
 
   def split_braille
     lines = reader.lines
-    times = lines.length / 3
     braille = []
-    ticker = 0
-    while ticker < times do
-      num_chars = lines[(ticker +1) * 3 -1].length / 2
-      characters = 0
-      until num_chars == 0 do
-        braille[characters] = []
-        line_num = 0
-        3.times do
-          braille[characters] << lines[line_num].slice!(0..1)
-          line_num += 1
-        end
-        braille[characters] = braille[characters].join
-        characters += 1
-        num_chars -=1
+    lines.each_slice(3) do |three_lines|
+      temp = []
+      until three_lines[0].empty? do
+        temp << three_lines[0].slice!(0..1) + three_lines[1].slice!(0..1) + three_lines[2].slice!(0..1)
       end
-      ticker += 1
+      braille << temp
     end
-    braille
+    braille.flatten
   end
 
   def translate
-    if is_english?
-      language = LanguageSwap.new(split_english, true)
-      language.translation
+    if english
+      language = LanguageSwap.new(split_english, english)
     else
-      language = LanguageSwap.new(split_braille, false)
-      language.translation
+      language = LanguageSwap.new(split_braille, english)
     end
+    language.translation
   end
 
   def combine_english(characters)
@@ -72,6 +71,10 @@ class Translation
 
   def stage_braille(characters)
     staged_braille = []
+    characters.map! do |character|
+      [character[0..1], character[2..3], character[4..5]]
+    end
+    characters = characters.transpose
     characters.each_slice(3) do |three_lines|
       until three_lines[0].empty? do
         staged_braille << three_lines[0].slice!(0..79)
@@ -80,5 +83,9 @@ class Translation
       end
     end
     staged_braille
+  end
+
+  def stage_english(characters)
+    [characters]
   end
 end
