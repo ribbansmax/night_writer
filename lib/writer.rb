@@ -10,7 +10,7 @@ class Writer
   def write_file
     File.open(path, 'a+') do |file|
       text.each do |line|
-        file.puts line
+        file.puts line.join
       end
     end
   end
