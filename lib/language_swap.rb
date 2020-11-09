@@ -29,7 +29,26 @@ class LanguageSwap
       'y' => '00.000',
       'z' => '0..000',
       ' ' => '......',
-      '$$$' => '.....0'
+      '$$$' => '.....0',
+      '!' => '..000.',
+      '"' => '....0.',
+      ',' => '..0...',
+      '-' => '....00',
+      '.' => '..00.0',
+      '?' => '..0.00',
+      '###' => '.0.000'
+    }
+    @num_chart = {
+      'a' => '1',
+      'b' => '2',
+      'c' => '3',
+      'd' => '4',
+      'e' => '5',
+      'f' => '6',
+      'g' => '7',
+      'h' => '8',
+      'i' => '9',
+      'j' => '0'
     }
     @english = english
     @translation = swap_characters(words)
@@ -75,5 +94,23 @@ class LanguageSwap
     else
       @braille_chart.invert.fetch(letter)
     end
+  end
+
+  def check_to_numberfy(words)
+    number = false
+    numbered = []
+    words.each do |character|
+      if character == "###"
+        number = true
+      elsif character == " "
+        number = false
+        numbered << character
+      elsif number
+        numbered << @num_chart.fetch(character)
+      else
+        numbered << character
+      end
+    end
+    numbered
   end
 end

@@ -54,4 +54,15 @@ class LanguageSwapTest < Minitest::Test
 
     assert_equal expected, language.check_to_capitalize_braille(words)
   end
+
+  def test_it_can_switch_numbers_english
+    english = false
+    words = [".0.000", "0.....", "......", "0....."]
+
+    language = LanguageSwap.new(words, english)
+    words = ["###", "a", " ", "a"]
+    expected = ["1", " ", "a"]
+
+    assert_equal expected, language.check_to_numberfy(words)
+  end
 end
