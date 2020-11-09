@@ -86,7 +86,6 @@ class Translation
         staged_braille << three_lines[2].slice!(0..39)
       end
     end
-    require'pry';binding.pry
     staged_braille
   end
 
