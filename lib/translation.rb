@@ -1,9 +1,9 @@
 class Translation
   attr_reader :destination, :reader, :english, :characters
-  def initialize(origin, destination)
+  def initialize(origin, destination, english)
     @destination = destination
     @reader = Reader.new(origin)
-    @english = is_english?
+    @english = english
     make_characters
   end
 
@@ -16,11 +16,6 @@ class Translation
       @characters = final_translation[0].length
     end
     Writer.new(destination, final_translation)
-  end
-
-  def is_english?
-    line = reader.first_line
-    line.gsub(/[0.]/, '') != ""
   end
 
   def make_characters
