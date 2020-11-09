@@ -1,7 +1,4 @@
-require 'minitest/autorun'
-require 'minitest/pride'
-require 'mocha/minitest'
-require './lib/writer'
+require './test/test_helper'
 
 class WriterTest < Minitest::Test
   def test_it_exists_and_has_attributes
@@ -17,10 +14,10 @@ class WriterTest < Minitest::Test
   end
 
   def test_it_can_write_to_file
-    text = ["hello world", "this is world"]
+    text = [["hello world"], ["this is world"]]
     destination = "dummy_writer.txt"
-    writer = Writer.new(destination, text)
+    Writer.new(destination, text)
 
-    assert File.exists?("./data/dummy_writer.txt")
+    assert File.exist?("./data/dummy_writer.txt")
   end
 end

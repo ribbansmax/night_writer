@@ -1,7 +1,4 @@
-require 'minitest/autorun'
-require 'minitest/pride'
-require 'mocha/minitest'
-require './lib/language_swap'
+require './test/test_helper'
 
 class LanguageSwapTest < Minitest::Test
   def test_it_can_swap_character

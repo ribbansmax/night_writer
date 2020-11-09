@@ -1,9 +1,9 @@
 class Translation
   attr_reader :destination, :reader, :english, :characters
-  def initialize(origin, destination)
+  def initialize(origin, destination, english)
     @destination = destination
     @reader = Reader.new(origin)
-    @english = is_english?
+    @english = english
     make_characters
   end
 
@@ -16,11 +16,6 @@ class Translation
       @characters = final_translation[0].length
     end
     Writer.new(destination, final_translation)
-  end
-
-  def is_english?
-    line = reader.first_line
-    line.gsub(/[0.]/, '') != ""
   end
 
   def make_characters
@@ -42,13 +37,17 @@ class Translation
     lines = reader.lines
     braille = []
     lines.each_slice(3) do |three_lines|
-      temp = []
-      until three_lines[0].empty? do
-        temp << three_lines[0].slice!(0..1) + three_lines[1].slice!(0..1) + three_lines[2].slice!(0..1)
-      end
-      braille << temp
+      braille << line_chops(three_lines)
     end
     braille.flatten
+  end
+
+  def line_chops(three_lines)
+    temp = []
+    until three_lines[0].empty? do
+      temp << three_lines[0].slice!(0..1) + three_lines[1].slice!(0..1) + three_lines[2].slice!(0..1)
+    end
+    temp
   end
 
   def translate
@@ -74,11 +73,15 @@ class Translation
   end
 
   def stage_braille(characters)
-    staged_braille = []
     characters.map! do |character|
       [character[0..1], character[2..3], character[4..5]]
     end
     characters = characters.transpose
+    limit_braille_length(characters)
+  end
+  
+  def limit_braille_length(characters)
+    staged_braille = []
     characters.each_slice(3) do |three_lines|
       until three_lines[0].empty? do
         staged_braille << three_lines[0].slice!(0..39)
@@ -86,7 +89,6 @@ class Translation
         staged_braille << three_lines[2].slice!(0..39)
       end
     end
-    require'pry';binding.pry
     staged_braille
   end
 
