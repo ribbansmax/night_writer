@@ -44,4 +44,14 @@ class LanguageSwapTest < Minitest::Test
 
     assert_equal expected, language.check_to_capitalize(words)
   end
+
+  def test_it_can_capitalize_braille
+    words = ["H", "i"]
+    english = true
+    language = LanguageSwap.new(words, english)
+
+    expected = ["$$$", "h", "i"]
+
+    assert_equal expected, language.check_to_capitalize_braille(words)
+  end
 end

@@ -36,10 +36,21 @@ class LanguageSwap
   end
 
   def swap_characters(words)
+    words = check_to_capitalize_braille(words)
     words.map! do |letter|
       swap_character(letter)
     end
     check_to_capitalize(words)
+  end
+
+  def check_to_capitalize_braille(words)
+    words.map do |character|
+      if character != character.downcase
+        ["$$$", character.downcase]
+      else
+        character
+      end
+    end.flatten
   end
 
   def check_to_capitalize(words)
