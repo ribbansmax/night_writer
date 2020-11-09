@@ -16,8 +16,8 @@ class WriterTest < Minitest::Test
   def test_it_can_write_to_file
     text = [["hello world"], ["this is world"]]
     destination = "dummy_writer.txt"
-    writer = Writer.new(destination, text)
+    Writer.new(destination, text)
 
-    assert File.exists?("./data/dummy_writer.txt")
+    assert File.exist?("./data/dummy_writer.txt")
   end
 end

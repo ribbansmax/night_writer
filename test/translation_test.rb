@@ -115,8 +115,22 @@ class TranslationTest < Minitest::Test
 
   def test_it_can_do_the_whole_shebang
     translation = Translation.new("dummy.txt", "dummy_writer_test.txt")
+    translation2 = Translation.new("braille_dummy.txt", "dummy_test_test.txt")
 
     translation.whole_shebang
-    assert File.exists?("./data/dummy_writer_test.txt")
+    assert File.exist?("./data/dummy_writer_test.txt")
+    translation2.whole_shebang
+    assert File.exist?("./data/dummy_test_test.txt")
+
+  end
+
+  def test_it_can_stage_english
+    reader = mock()
+    Reader.expects(:new).returns(reader)
+    reader.stubs(:first_line).returns("true")
+    reader.stubs(:characters).returns(["true"])
+    translation = Translation.new("", "")
+
+    assert_equal [["hello"]], translation.stage_english(["hello"])
   end
 end
