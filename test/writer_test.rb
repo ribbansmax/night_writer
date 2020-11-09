@@ -14,7 +14,7 @@ class WriterTest < Minitest::Test
   end
 
   def test_it_can_write_to_file
-    text = ["hello world", "this is world"]
+    text = [["hello world"], ["this is world"]]
     destination = "dummy_writer.txt"
     writer = Writer.new(destination, text)
 
