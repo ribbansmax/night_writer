@@ -1,7 +1,4 @@
-require 'minitest/autorun'
-require 'minitest/pride'
-require 'mocha/minitest'
-require './lib/reader'
+require './test/test_helper'
 
 class ReaderTest < Minitest::Test
   def test_it_exists_and_has_attributes
