@@ -33,4 +33,15 @@ class LanguageSwapTest < Minitest::Test
 
     assert_equal expected, language.swap_characters(["0.00..", ".00..."])
   end
+
+  def test_it_can_capitalize_english
+    english = false
+    words = [".....0", "0.00..", ".00..."]
+
+    language = LanguageSwap.new(words, english)
+    words = ["$$$", "h", "i"]
+    expected = ["H", "i"]
+
+    assert_equal expected, language.check_to_capitalize(words)
+  end
 end
