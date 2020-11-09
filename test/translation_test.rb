@@ -40,6 +40,7 @@ class TranslationTest < Minitest::Test
     Reader.expects(:new).returns(reader)
     reader.expects(:first_line).returns("hello world")
     reader.expects(:lines).returns(["hello world", "this is world"])
+    reader.stubs(:characters).returns(["true"])
     translation = Translation.new("", "")
     expected = ["h", "e", "l", "l", "o", " ", "w", "o", "r", "l", "d", "t", "h", "i", "s", " ", "i", "s", " ", "w", "o", "r", "l", "d"]
 
@@ -51,6 +52,7 @@ class TranslationTest < Minitest::Test
     Reader.expects(:new).returns(reader)
     reader.expects(:first_line).returns("0..0")
     reader.expects(:lines).returns(["0..0", "...0", "0.0."])
+    reader.stubs(:characters).returns(["true"])
     translation = Translation.new("", "")
 
     expected = ["0...0.",".0.00."]
@@ -75,6 +77,7 @@ class TranslationTest < Minitest::Test
     reader = mock()
     Reader.expects(:new).returns(reader)
     reader.stubs(:first_line).returns("true")
+    reader.stubs(:characters).returns(["true"])
     translation = Translation.new("", "")
 
     expected = "hi"
@@ -86,6 +89,7 @@ class TranslationTest < Minitest::Test
     reader = mock()
     Reader.expects(:new).returns(reader)
     reader.stubs(:first_line).returns("true")
+    reader.stubs(:characters).returns(["true"])
     translation = Translation.new("", "")
 
     characters = ["00..00", "00..00"]
@@ -98,10 +102,13 @@ class TranslationTest < Minitest::Test
     reader = mock()
     Reader.expects(:new).returns(reader)
     reader.stubs(:first_line).returns("true")
+    reader.stubs(:characters).returns(["true"])
     translation = Translation.new("", "")
 
-    characters = ["0000000000000000000000000000000000000000000000000000000000000000000000000000000000", "0000000000000000000000000000000000000000000000000000000000000000000000000000000000", "0000000000000000000000000000000000000000000000000000000000000000000000000000000000"]
-    expected = ["00000000000000000000000000000000000000000000000000000000000000000000000000000000", "00000000000000000000000000000000000000000000000000000000000000000000000000000000", "00000000000000000000000000000000000000000000000000000000000000000000000000000000", "00", "00", "00"]
+    characters = ["0.00..", "0..0..", "0.0.0.", "0.0.0.", "0..00.", "......", ".000.0", "0..00.", "0.000.", "0.0.0.", "00.0..", ".0000.", "0.00..", ".00...", ".00.0.", "......", ".00...", ".00.0.", "......", ".000.0", "0..00.", "0.000.", "0.0.0.", "00.0.."]
+    expected = [["0.", "0.", "0.", "0.", "0.", "..", ".0", "0.", "0.", "0.", "00", ".0", "0.", ".0", ".0", "..", ".0", ".0", "..", ".0", "0.", "0.", "0.", "00"],
+    ["00", ".0", "0.", "0.", ".0", "..", "00", ".0", "00", "0.", ".0", "00", "00", "0.", "0.", "..", "0.", "0.", "..", "00", ".0", "00", "0.", ".0"],
+    ["..", "..", "0.", "0.", "0.", "..", ".0", "0.", "0.", "0.", "..", "0.", "..", "..", "0.", "..", "..", "0.", "..", ".0", "0.", "0.", "0.", ".."]]
 
     assert_equal expected, translation.stage_braille(characters)
   end
