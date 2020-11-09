@@ -65,4 +65,15 @@ class LanguageSwapTest < Minitest::Test
 
     assert_equal expected, language.check_to_numberfy(words)
   end
+
+  def test_it_can_switch_numbers_braille
+    english = true
+    words = ["H", "i"]
+
+    language = LanguageSwap.new(words, english)
+    words = ["1", "2", " ", "a"]
+    expected = ["###", "a", "b", " ", "a"]
+
+    assert_equal expected, language.add_number_switch(words)
+  end
 end

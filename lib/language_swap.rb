@@ -55,11 +55,13 @@ class LanguageSwap
   end
 
   def swap_characters(words)
+    words = add_number_switch(words)
     words = check_to_capitalize_braille(words)
     words.map! do |letter|
       swap_character(letter)
     end
-    check_to_capitalize(words)
+    words = check_to_capitalize(words)
+    check_to_numberfy(words)
   end
 
   def check_to_capitalize_braille(words)
@@ -112,5 +114,26 @@ class LanguageSwap
       end
     end
     numbered
+  end
+
+  def add_number_switch(words)
+    switched = []
+    numbers = 0
+    words.each do |character|
+      if @num_chart.invert.include?(character)
+        numbers += 1
+      elsif character == " "
+        numbers = 0
+      end
+      if numbers == 0
+        switched << character
+      elsif numbers == 1
+        character = @num_chart.invert.fetch(character)
+        switched << ["###", character]
+      else
+        switched << @num_chart.invert.fetch(character)
+      end
+    end
+    switched.flatten
   end
 end
