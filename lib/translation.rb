@@ -73,11 +73,15 @@ class Translation
   end
 
   def stage_braille(characters)
-    staged_braille = []
     characters.map! do |character|
       [character[0..1], character[2..3], character[4..5]]
     end
     characters = characters.transpose
+    limit_braille_length(characters)
+  end
+  
+  def limit_braille_length(characters)
+    staged_braille = []
     characters.each_slice(3) do |three_lines|
       until three_lines[0].empty? do
         staged_braille << three_lines[0].slice!(0..39)

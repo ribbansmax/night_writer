@@ -119,6 +119,21 @@ class TranslationTest < Minitest::Test
     assert_equal expected, translation.stage_braille(characters)
   end
 
+  def test_it_can_make_sure_braille_horizontally_stops_at_80
+    reader = mock()
+    Reader.expects(:new).returns(reader)
+    reader.stubs(:characters).returns(["true"])
+    translation = Translation.new("", "", true)
+
+    characters = ["0.00..", "0..0..", "0.0.0.", "0.0.0.", "0..00.", "......", ".000.0", "0..00.", "0.000.", "0.0.0.", "00.0..", ".0000.", "0.00..", ".00...", ".00.0.", "......", ".00...", ".00.0.", "......", ".000.0", "0..00.", "0.000.", "0.0.0.", "00.0.."]
+    expected = [["0.", "0.", "0.", "0.", "0.", "..", ".0", "0.", "0.", "0.", "00", ".0", "0.", ".0", ".0", "..", ".0", ".0", "..", ".0", "0.", "0.", "0.", "00"],
+    ["00", ".0", "0.", "0.", ".0", "..", "00", ".0", "00", "0.", ".0", "00", "00", "0.", "0.", "..", "0.", "0.", "..", "00", ".0", "00", "0.", ".0"],
+    ["..", "..", "0.", "0.", "0.", "..", ".0", "0.", "0.", "0.", "..", "0.", "..", "..", "0.", "..", "..", "0.", "..", ".0", "0.", "0.", "0.", ".."]]
+
+    assert_equal expected, translation.stage_braille(characters)
+
+  end
+
   def test_it_can_do_the_whole_shebang
     translation = Translation.new("dummy.txt", "dummy_writer_test.txt", true)
     translation2 = Translation.new("braille_dummy.txt", "dummy_test_test.txt", false)
