@@ -37,13 +37,17 @@ class Translation
     lines = reader.lines
     braille = []
     lines.each_slice(3) do |three_lines|
-      temp = []
-      until three_lines[0].empty? do
-        temp << three_lines[0].slice!(0..1) + three_lines[1].slice!(0..1) + three_lines[2].slice!(0..1)
-      end
-      braille << temp
+      braille << line_chops(three_lines)
     end
     braille.flatten
+  end
+
+  def line_chops(three_lines)
+    temp = []
+    until three_lines[0].empty? do
+      temp << three_lines[0].slice!(0..1) + three_lines[1].slice!(0..1) + three_lines[2].slice!(0..1)
+    end
+    temp
   end
 
   def translate

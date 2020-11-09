@@ -57,6 +57,18 @@ class TranslationTest < Minitest::Test
     assert_equal expected, translation.split_braille
   end
 
+  def test_it_can_chop_lines_vertically
+    reader = mock()
+    Reader.expects(:new).returns(reader)
+    reader.expects(:lines).returns(["0..0", "...0", "0.0."])
+    reader.stubs(:characters).returns(["true"])
+    translation = Translation.new("", "", false)
+
+    expected = ["0...0.",".0.00."]
+
+    assert_equal expected, translation.line_chops(reader.lines)
+  end
+
   def test_it_can_translate
     translation = Translation.new("dummy.txt", "", true)
     translation2 = Translation.new("braille_dummy.txt", "", false)
