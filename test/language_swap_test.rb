@@ -75,5 +75,13 @@ class LanguageSwapTest < Minitest::Test
     expected = ["###", "a", "b", " ", "a"]
 
     assert_equal expected, language.add_number_switch(words)
+
+    english = true
+    words = ["H", "i"]
+
+    language = LanguageSwap.new(words, english)
+    words = ["1", "2", "c", "a"]
+    expected = ["###", "a", "b", " ", "c", "a"]
+    assert_equal expected, language.add_number_switch(words)
   end
 end
