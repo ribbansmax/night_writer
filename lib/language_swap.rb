@@ -122,7 +122,7 @@ class LanguageSwap
     words.each do |character|
       if @num_chart.invert.include?(character)
         numbers += 1
-      elsif character == " "
+      else
         numbers = 0
       end
       if numbers == 0
